@@ -122,4 +122,4 @@ class CustomCommands(commands.Cog):
 
 async def setup(bot):
     mongo_client = bot.mongo_client
-    bot.add_cog(CustomCommands(bot, mongo_client))
+    await bot.add_cog(CustomCommands(bot, mongo_client))

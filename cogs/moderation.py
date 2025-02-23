@@ -4,7 +4,7 @@ from discord.ext import commands
 class Moderation(commands.Cog):
     def __init__(self, bot, mongo_client):
         self.bot = bot
-        self.mongo_client = mongo_client
+        self.mongo_client = mongo_client["Cass-Eco2"]
 
     def has_custom_role(self, ctx):
         """Vérifie si l'utilisateur a le rôle 'AdminMod'."""
@@ -59,4 +59,4 @@ class Moderation(commands.Cog):
 
 async def setup(bot):
     mongo_client = bot.mongo_client
-    bot.add_cog(Moderation(bot, mongo_client))
+    await bot.add_cog(Moderation(bot, mongo_client))

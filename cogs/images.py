@@ -5,7 +5,7 @@ import motor.motor_asyncio
 class Images(commands.Cog):
     def __init__(self, bot, mongo_client):
         self.bot = bot
-        self.mongo_client = mongo_client
+        self.mongo_client = mongo_client["Cass-Eco2"]
 
     async def get_image(self, guild_id, image_name):
         """Récupère une image stockée dans la base de données."""
@@ -45,6 +45,6 @@ class Images(commands.Cog):
         else:
             await ctx.send("❌ Aucune image trouvée avec ce nom.")
 
-def setup(bot):
+async def setup(bot):
     mongo_client = bot.mongo_client
-    bot.add_cog(Images(bot, mongo_client))
+    await bot.add_cog(Images(bot, mongo_client))
