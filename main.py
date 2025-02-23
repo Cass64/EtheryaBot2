@@ -54,6 +54,7 @@ except Exception as e:
     print(f"❌ Erreur de connexion à Discord: {e}")
 
 def run_flask():
+    print("🟢 Démarrage de Flask...")
     app.run(host="0.0.0.0", port=port)
 
 async def run_bot():
