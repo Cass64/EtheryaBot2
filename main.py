@@ -36,21 +36,21 @@ COGS = ["cogs.custom_commands", "cogs.moderation", "cogs.economy", "cogs.images"
 async def on_ready():
     print(f"Connecté en tant que {bot.user}")
 
-def run_flask():
+async def run_flask():
     # Exécution de Flask sur un thread séparé
     app.run(host='0.0.0.0', port=port)
 
 async def run_bot():
-    # Charger les cogs de manière synchrone (pas besoin de await ici)
+    # Charger les cogs de manière asynchrone
     for cog in COGS:
-        bot.load_extension(cog)  # Pas de await nécessaire ici
+        await bot.load_extension(cog)  # Utiliser await ici
     
     # Démarrer le bot
     await bot.start(os.getenv("TOKEN_BOT_DISCORD"))
 
 if __name__ == "__main__":
     # Démarrer Flask dans un thread séparé
-    threading.Thread(target=run_flask).start()
+    threading.Thread(target=asyncio.run, args=(run_flask(),)).start()
 
     # Démarrer le bot Discord dans l'event loop principal
     asyncio.run(run_bot())
