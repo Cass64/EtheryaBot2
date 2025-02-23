@@ -45,7 +45,7 @@ def run_flask():
 async def run_bot():
     print("🚀 Lancement de run_bot()...")
 
-    TOKEN = "MTM0MTQ3MDk4MDQ3MTc4NzU2Mw.GjqjeA.eca_lsCQkt2HgnpJfYh3mMGMUw7M-Se38Dt6gw"
+    TOKEN = "MTM0MTQ3MDk4MDQ3MTc4NzU2Mw.GjqjeA.eca_ls
 
     if not TOKEN:
         print("❌ ERREUR: La variable d'environnement TOKEN_BOT_DISCORD n'est pas définie !")
