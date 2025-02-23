@@ -66,6 +66,8 @@ async def run_bot():
 
     print("🔄 Démarrage du bot...")
     # Test de la connexion à l'API Discord
+        print("🟢 Test de connexion à l'API Discord en cours...")
+    
     try:
         response = requests.get("https://discord.com/api/v10/gateway")
         if response.status_code == 200:
