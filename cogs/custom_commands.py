@@ -43,6 +43,7 @@ class CustomCommands(commands.Cog):
 
     @commands.command()
     async def addcustomcmd(self, ctx, name: str, response: str, permissions: str):
+        await ctx.send("Test reçu !")
         """Commande pour ajouter une commande personnalisée."""
         if not ctx.author.guild_permissions.administrator:
             return await ctx.send("❌ Vous devez être administrateur pour ajouter une commande personnalisée.")
