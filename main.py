@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-form flask import Flask
+from flask import Flask
 import motor.motor_asyncio
 import os
 
