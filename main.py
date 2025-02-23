@@ -38,8 +38,9 @@ async def on_ready():
     print(f"Connecté en tant que {bot.user}")
 
 async def run_flask():
-    # Exécution de Flask sur un thread séparé
-    app.run(host='0.0.0.0', port=port)
+    # Exécution de Flask sur un thread séparé en utilisant asyncio
+    loop = asyncio.get_event_loop()
+    await loop.run_in_executor(None, app.run, '0.0.0.0', port)
 
 async def run_bot():
     # Charger les cogs de manière asynchrone
@@ -50,8 +51,7 @@ async def run_bot():
     await bot.start(os.getenv("TOKEN_BOT_DISCORD"))
 
 if __name__ == "__main__":
-    # Démarrer Flask dans un thread séparé
-    threading.Thread(target=asyncio.run, args=(run_flask(),)).start()
-
-    # Démarrer le bot Discord dans l'event loop principal
-    asyncio.run(run_bot())
+    # Démarrer Flask et le bot Discord simultanément dans asyncio
+    loop = asyncio.get_event_loop()
+    loop.create_task(run_flask())  # Flask dans un task
+    loop.run_until_complete(run_bot())  # Démarre le bot Discord

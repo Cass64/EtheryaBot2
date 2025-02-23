@@ -25,9 +25,11 @@ class Economy(commands.Cog):
 
     @commands.command()
     async def Ebalance(self, ctx):
+        print("test")
         """Affiche le solde de l'utilisateur."""
         balance = await self.get_balance(ctx.author.id)
         await ctx.send(f"💰 {ctx.author.mention}, tu as {balance} pièces.")
+        
 
     @commands.command()
     async def Egive(self, ctx, member: discord.Member, amount: int):
