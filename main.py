@@ -41,9 +41,9 @@ def run_flask():
     app.run(host='0.0.0.0', port=port)
 
 async def run_bot():
-    # Charger les cogs
+    # Charger les cogs de manière synchrone (pas besoin de await ici)
     for cog in COGS:
-        await bot.load_extension(cog)
+        bot.load_extension(cog)  # Pas de await nécessaire ici
     
     # Démarrer le bot
     await bot.start(os.getenv("TOKEN_BOT_DISCORD"))
