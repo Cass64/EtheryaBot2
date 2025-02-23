@@ -122,5 +122,5 @@ class CustomCommands(commands.Cog):
         else:
             await ctx.send(f"❌ Aucune commande personnalisée trouvée avec le nom `{name}`.")
 
-def setup(bot):
+async def setup(bot):
     bot.add_cog(CustomCommands(bot))

@@ -56,5 +56,5 @@ class Moderation(commands.Cog):
         else:
             await ctx.send("Ce membre n'est pas mute.")
 
-def setup(bot):
+async def setup(bot):
     bot.add_cog(Moderation(bot))

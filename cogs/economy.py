@@ -44,5 +44,5 @@ class Economy(commands.Cog):
         await self.update_balance(member.id, amount)
         await ctx.send(f"💸 {ctx.author.mention} a donné {amount} pièces à {member.mention}.")
 
-def setup(bot):
+async def setup(bot):
     bot.add_cog(Economy(bot))
