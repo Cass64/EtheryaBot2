@@ -28,6 +28,7 @@ intents.guilds = True
 intents.message_content = True  
 
 bot = commands.Bot(command_prefix="!!", intents=intents)
+bot.mongo_client = mongo_client
 
 COGS = ["cogs.custom_commands", "cogs.moderation", "cogs.economy", "cogs.images"]
 
