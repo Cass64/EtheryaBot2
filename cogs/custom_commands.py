@@ -3,11 +3,9 @@ from discord.ext import commands
 from pymongo import MongoClient
 
 class CustomCommands(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot, mongo_client):
         self.bot = bot
-        self.client = MongoClient("mongodb://localhost:27017")  # URL de connexion MongoDB
-        self.db = self.client["bot_database"]  # Nom de la base de données
-        self.collection = self.db["custom_commands"]  # Nom de la collection
+        self.db = mongo_client["Cass-Eco2"]
 
     async def get_custom_commands(self, guild_id):
         """Récupère les commandes personnalisées pour un serveur donné."""
@@ -123,4 +121,5 @@ class CustomCommands(commands.Cog):
             await ctx.send(f"❌ Aucune commande personnalisée trouvée avec le nom `{name}`.")
 
 async def setup(bot):
-    bot.add_cog(CustomCommands(bot))
+    mongo_client = bot.mongo_client
+    bot.add_cog(CustomCommands(bot, mongo_client))

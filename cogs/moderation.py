@@ -2,8 +2,9 @@ import discord
 from discord.ext import commands
 
 class Moderation(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot, mongo_client):
         self.bot = bot
+        self.mongo_client = mongo_client
 
     def has_custom_role(self, ctx):
         """Vérifie si l'utilisateur a le rôle 'AdminMod'."""
@@ -57,4 +58,5 @@ class Moderation(commands.Cog):
             await ctx.send("Ce membre n'est pas mute.")
 
 async def setup(bot):
-    bot.add_cog(Moderation(bot))
+    mongo_client = bot.mongo_client
+    bot.add_cog(Moderation(bot, mongo_client))

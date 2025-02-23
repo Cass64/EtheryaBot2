@@ -3,10 +3,9 @@ from discord.ext import commands
 import motor.motor_asyncio
 
 class Economy(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot, mongo_client):
         self.bot = bot
-        self.db = bot.mongo_client["Cass-Eco2"]
-        self.economy_collection = self.db["economy"]
+        self.db = mongo_client["Cass-Eco2"]
 
     async def Eget_balance(self, user_id):
         """Récupère le solde d'un utilisateur."""
@@ -45,4 +44,5 @@ class Economy(commands.Cog):
         await ctx.send(f"💸 {ctx.author.mention} a donné {amount} pièces à {member.mention}.")
 
 async def setup(bot):
-    bot.add_cog(Economy(bot))
+    mongo_client = bot.mongo_client
+    bot.add_cog(Economy(bot, mongo_client))

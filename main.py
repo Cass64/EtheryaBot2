@@ -30,6 +30,7 @@ intents.message_content = True  # Ajout de l'intent de contenu de message
 bot = commands.Bot(command_prefix="!!", intents=intents)
 
 # Chargement des cogs
+bot.mongo_client = mongo_client  # Ajoute le client MongoDB au bot
 COGS = ["cogs.custom_commands", "cogs.moderation", "cogs.economy", "cogs.images"]
 
 @bot.event
