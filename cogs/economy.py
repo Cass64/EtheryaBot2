@@ -4,6 +4,7 @@ import motor.motor_asyncio
 
 class Economy(commands.Cog):
     def __init__(self, bot, mongo_client):
+        print("Constructeur de la classe Economy")
         self.bot = bot
         self.db = mongo_client["Cass-Eco2"]
 

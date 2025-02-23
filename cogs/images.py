@@ -4,6 +4,7 @@ import motor.motor_asyncio
 
 class Images(commands.Cog):
     def __init__(self, bot, mongo_client):
+        print("Constructeur de la classe Images")
         self.bot = bot
         self.mongo_client = mongo_client["Cass-Eco2"]
 

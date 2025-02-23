@@ -3,6 +3,7 @@ from discord.ext import commands
 
 class Moderation(commands.Cog):
     def __init__(self, bot, mongo_client):
+        print("Constructeur de la classe Moderation")
         self.bot = bot
         self.mongo_client = mongo_client["Cass-Eco2"]
 
