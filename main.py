@@ -68,6 +68,7 @@ async def run_bot():
 
     try:
         await bot.start(TOKEN)
+        print("🟢 Le bot a bien démarré (après bot.start())")  # 🛠️ Ajout du print
     except discord.LoginFailure:
         print("❌ ERREUR: Le token est invalide ! Vérifie la clé dans tes variables d'environnement.")
     except Exception as e:
