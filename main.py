@@ -3,6 +3,14 @@ from discord.ext import commands
 import motor.motor_asyncio
 import os
 
+app = Flask(__name__)
+
+# Utilise la variable d'environnement PORT fournie par Render
+port = int(os.getenv('PORT', 5000))  # Défaut à 5000 si non définie
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=port)
+
 TOKEN = os.getenv("TOKEN_BOT_DISCORD")  # Le token sera stocké sur Render
 
 # Connexion à MongoDB
