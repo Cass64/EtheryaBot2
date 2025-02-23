@@ -5,6 +5,7 @@ from flask import Flask
 import os
 import asyncio
 import threading
+import requests  # Importation pour tester la connexion API Discord
 
 app = Flask(__name__)
 
@@ -28,31 +29,39 @@ intents.guilds = True
 intents.message_content = True  
 
 bot = commands.Bot(command_prefix="!!", intents=intents)
-bot.mongo_client = mongo_client
 
 COGS = ["cogs.custom_commands", "cogs.moderation", "cogs.economy", "cogs.images"]
 
 @bot.event
 async def on_ready():
-    print("🟢 on_ready() s'exécute !")
     print(f"✅ Connecté en tant que {bot.user} (ID: {bot.user.id})")
     print(f"🔗 Connecté à {len(bot.guilds)} serveurs")
     print("🚀 Le bot est prêt à l'emploi !")
 
+# Test de la connexion à l'API Discord avant de démarrer le bot
+print("🟢 Test de connexion à l'API Discord en cours...")
+
+try:
+    response = requests.get("https://discord.com/api/v10/gateway")
+    if response.status_code == 200:
+        print("✅ Render peut accéder à l'API Discord.")
+    else:
+        print(f"❌ Render ne peut pas accéder à Discord. Code: {response.status_code}")
+except Exception as e:
+    print(f"❌ Erreur de connexion à Discord: {e}")
+
 def run_flask():
-    print("🌐 Démarrage de Flask...")
     app.run(host="0.0.0.0", port=port)
 
 async def run_bot():
-    print("🚀 Lancement de run_bot()...")
-
-    TOKEN = os.getenv('TOKEN_BOT_DISCORD')
+    print("🟡 Tentative de démarrer le bot...")
+    TOKEN = os.getenv("TOKEN_BOT_DISCORD")
 
     if not TOKEN:
         print("❌ ERREUR: La variable d'environnement TOKEN_BOT_DISCORD n'est pas définie !")
-        return  # Arrête l'exécution si le token est manquant
+        return
 
-    print(f"🔑 Token détecté: {TOKEN[:10]}... (masqué)")  # Affiche un bout du token pour voir s'il est bien chargé
+    print(f"🔑 Token détecté: {TOKEN[:10]}... (masqué)")
 
     # Charger les COGS avec gestion des erreurs
     i = 0
@@ -65,37 +74,18 @@ async def run_bot():
             print(f"❌ Erreur lors du chargement de {cog}: {e}")
 
     print("🔄 Démarrage du bot...")
-    # Test de la connexion à l'API Discord
-        print("🟢 Test de connexion à l'API Discord en cours...")
-    
-    try:
-        response = requests.get("https://discord.com/api/v10/gateway")
-        if response.status_code == 200:
-            print("✅ Render peut accéder à l'API Discord.")
-        else:
-            print(f"❌ Render ne peut pas accéder à Discord. Code: {response.status_code}")
-    except Exception as e:
-        print(f"❌ Erreur de connexion à Discord: {e}")
     try:
         await bot.start(TOKEN)
-        print("🟢 Le bot a bien démarré (après bot.start())")  # 🛠️ Ajout du print
     except discord.LoginFailure:
-        print("❌ ERREUR: Le token est invalide ! Vérifie la clé dans tes variables d'environnement.")
+        print("❌ ERREUR: Le token est invalide !")
     except Exception as e:
         print(f"❌ ERREUR INATTENDUE: {e}")
 
-
 if __name__ == "__main__":
-    print("🟠 Démarrage du script principal...")
-
     flask_thread = threading.Thread(target=run_flask, daemon=True)
     flask_thread.start()
 
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-
-    print("🟡 Exécution de run_bot()...")
     
     loop.run_until_complete(run_bot())
-
-
