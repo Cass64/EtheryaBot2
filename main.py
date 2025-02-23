@@ -3,7 +3,7 @@ from discord.ext import commands
 import motor.motor_asyncio
 import os
 
-TOKEN = os.getenv("DISCORD_TOKEN")  # Le token sera stocké sur Render
+TOKEN = os.getenv("TOKEN_BOT_DISCORD")  # Le token sera stocké sur Render
 
 # Connexion à MongoDB
 MONGO_URL = os.getenv("MONGO_URI")
