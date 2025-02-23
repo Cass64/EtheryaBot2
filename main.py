@@ -33,12 +33,12 @@ def run_flask():
     # Exécution de Flask sur un thread séparé
     app.run(host='0.0.0.0', port=port)
 
-def run_bot():
-    # Lancer le bot
+async def run_bot():
+    # Charger les cogs
     for cog in COGS:
-        bot.load_extension(cog)
+        await bot.load_extension(cog)
     
-    bot.run(os.getenv("TOKEN_BOT_DISCORD"))
+    await bot.start(os.getenv("TOKEN_BOT_DISCORD"))
 
 if __name__ == "__main__":
     # Démarrer Flask dans un thread séparé
