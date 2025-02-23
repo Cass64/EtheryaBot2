@@ -1,18 +1,14 @@
 import discord
 from discord.ext import commands
-from flask import Flask
 import motor.motor_asyncio
+from flask import Flask
 import os
+import threading
 
 app = Flask(__name__)
 
 # Utilise la variable d'environnement PORT fournie par Render
 port = int(os.getenv('PORT', 5000))  # Défaut à 5000 si non définie
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=port)
-
-TOKEN = os.getenv("TOKEN_BOT_DISCORD")  # Le token sera stocké sur Render
 
 # Connexion à MongoDB
 MONGO_URL = os.getenv("MONGO_URI")
@@ -33,8 +29,20 @@ COGS = ["cogs.custom_commands", "cogs.moderation", "cogs.economy", "cogs.images"
 async def on_ready():
     print(f"Connecté en tant que {bot.user}")
 
-if __name__ == "__main__":
+def run_flask():
+    # Exécution de Flask sur un thread séparé
+    app.run(host='0.0.0.0', port=port)
+
+def run_bot():
+    # Lancer le bot
     for cog in COGS:
         bot.load_extension(cog)
     
-    bot.run(TOKEN)
+    bot.run(os.getenv("TOKEN_BOT_DISCORD"))
+
+if __name__ == "__main__":
+    # Démarrer Flask dans un thread séparé
+    threading.Thread(target=run_flask).start()
+
+    # Démarrer le bot Discord
+    run_bot()
