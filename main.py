@@ -5,7 +5,7 @@ from flask import Flask
 import os
 import asyncio
 import threading
-import requests  # Importation pour tester la connexion API Discord
+import requests  # Pour tester la connexion API Discord
 
 app = Flask(__name__)
 
@@ -29,6 +29,9 @@ intents.guilds = True
 intents.message_content = True  
 
 bot = commands.Bot(command_prefix="!!", intents=intents)
+
+# Ajout du client MongoDB en tant qu'attribut du bot
+bot.mongo_client = mongo_client  # C'est ici que tu l'ajoutes
 
 COGS = ["cogs.custom_commands", "cogs.moderation", "cogs.economy", "cogs.images"]
 
@@ -89,3 +92,4 @@ if __name__ == "__main__":
     asyncio.set_event_loop(loop)
     
     loop.run_until_complete(run_bot())
+
