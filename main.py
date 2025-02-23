@@ -65,7 +65,15 @@ async def run_bot():
             print(f"❌ Erreur lors du chargement de {cog}: {e}")
 
     print("🔄 Démarrage du bot...")
-
+    # Test de la connexion à l'API Discord
+    try:
+        response = requests.get("https://discord.com/api/v10/gateway")
+        if response.status_code == 200:
+            print("✅ Render peut accéder à l'API Discord.")
+        else:
+            print(f"❌ Render ne peut pas accéder à Discord. Code: {response.status_code}")
+    except Exception as e:
+        print(f"❌ Erreur de connexion à Discord: {e}")
     try:
         await bot.start(TOKEN)
         print("🟢 Le bot a bien démarré (après bot.start())")  # 🛠️ Ajout du print
