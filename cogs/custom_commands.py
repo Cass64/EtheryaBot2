@@ -18,9 +18,9 @@ class CustomCommands(commands.Cog):
 
     def check_permissions(self, user, required_permission):
         """Vérifie si l'utilisateur a les permissions nécessaires pour exécuter la commande."""
-        if required_permission == "ADMINISTRATOR" and user.guild_permissions.administrator:
+        if required_permission == "″ [𝑺ץ] Développeur" and user.guild_permissions.administrator:
             return True
-        if required_permission == "MODERATOR" and any(role.name == "Modérateur" for role in user.roles):
+        if required_permission == "″ [𝑺ץ] Développeur" and any(role.name == "Modérateur" for role in user.roles):
             return True
         return False
 
