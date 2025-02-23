@@ -8,53 +8,82 @@ import threading
 
 app = Flask(__name__)
 
-# Route Flask pour tester
 @app.route('/')
 def index():
     return "Le bot fonctionne !"
 
-# Utilise la variable d'environnement PORT fournie par Render
-port = int(os.getenv('PORT', 5000))  # Défaut à 5000 si non défini
+port = int(os.getenv('PORT', 5000))  # Port utilisé pour Flask
 
 # Connexion à MongoDB
 MONGO_URL = os.getenv("MONGO_URI")
+if not MONGO_URL:
+    print("❌ ERREUR: La variable d'environnement MONGO_URI n'est pas définie !")
 mongo_client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URL)
 db = mongo_client["Cass-Eco2"]
 
-# Configuration du bot
+# Configuration des intents
 intents = discord.Intents.default()
 intents.messages = True
 intents.guilds = True
-intents.message_content = True  # Ajout de l'intent de contenu de message
+intents.message_content = True  
 
 bot = commands.Bot(command_prefix="!!", intents=intents)
 
-# Chargement des cogs
-bot.mongo_client = mongo_client  # Ajoute le client MongoDB au bot
 COGS = ["cogs.custom_commands", "cogs.moderation", "cogs.economy", "cogs.images"]
 
 @bot.event
 async def on_ready():
-    print(f"Connecté en tant que {bot.user}")
+    print("🟢 on_ready() s'exécute !")
+    print(f"✅ Connecté en tant que {bot.user} (ID: {bot.user.id})")
+    print(f"🔗 Connecté à {len(bot.guilds)} serveurs")
+    print("🚀 Le bot est prêt à l'emploi !")
 
-async def run_flask():
-    # Exécution de Flask sur un thread séparé en utilisant asyncio
-    loop = asyncio.get_event_loop()
-    await loop.run_in_executor(None, app.run, '0.0.0.0', port)
+def run_flask():
+    print("🌐 Démarrage de Flask...")
+    app.run(host="0.0.0.0", port=port)
 
 async def run_bot():
-    # Charger les cogs de manière asynchrone
+    print("🚀 Lancement de run_bot()...")
+
+    TOKEN = "MTM0MTQ3MDk4MDQ3MTc4NzU2Mw.GjqjeA.eca_lsCQkt2HgnpJfYh3mMGMUw7M-Se38Dt6gw"
+
+    if not TOKEN:
+        print("❌ ERREUR: La variable d'environnement TOKEN_BOT_DISCORD n'est pas définie !")
+        return  # Arrête l'exécution si le token est manquant
+
+    print(f"🔑 Token détecté: {TOKEN[:10]}... (masqué)")  # Affiche un bout du token pour voir s'il est bien chargé
+
+    # Charger les COGS avec gestion des erreurs
     i = 0
     for cog in COGS:
-        await bot.load_extension(cog)  # Utiliser await ici
-        i += 1
-        print(f"Cog {i} chargé")
-    
-    # Démarrer le bot
-    await bot.start(os.getenv("TOKEN_BOT_DISCORD"))
+        try:
+            await bot.load_extension(cog)
+            i += 1
+            print(f"✅ Cog {i} chargé : {cog}")
+        except Exception as e:
+            print(f"❌ Erreur lors du chargement de {cog}: {e}")
+
+    print("🔄 Démarrage du bot...")
+
+    try:
+        await bot.start(TOKEN)
+    except discord.LoginFailure:
+        print("❌ ERREUR: Le token est invalide ! Vérifie la clé dans tes variables d'environnement.")
+    except Exception as e:
+        print(f"❌ ERREUR INATTENDUE: {e}")
+
 
 if __name__ == "__main__":
-    # Démarrer Flask et le bot Discord simultanément dans asyncio
-    loop = asyncio.get_event_loop()
-    loop.create_task(run_flask())  # Flask dans un task
-    loop.run_until_complete(run_bot())  # Démarre le bot Discord
+    print("🟠 Démarrage du script principal...")
+
+    flask_thread = threading.Thread(target=run_flask, daemon=True)
+    flask_thread.start()
+
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
+    print("🟡 Exécution de run_bot()...")
+    
+    loop.run_until_complete(run_bot())
+
+
