@@ -86,11 +86,10 @@ async def run_bot():
         print(f"❌ ERREUR INATTENDUE: {e}")
 
 if __name__ == "__main__":
+    # Démarrer Flask dans un thread séparé
     flask_thread = threading.Thread(target=run_flask, daemon=True)
     flask_thread.start()
 
-    loop = syncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    
-    loop.run_until_complete(run_bot())
+    # Exécuter le bot de manière synchrone
+    run_bot()
 
