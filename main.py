@@ -3,7 +3,7 @@ from discord.ext import commands
 import motor.motor_asyncio
 from flask import Flask
 import os
-import asyncio
+import asyncio  # Nécessaire pour utiliser asyncio.run
 import threading
 import requests  # Pour tester la connexion API Discord
 
@@ -91,5 +91,5 @@ if __name__ == "__main__":
     flask_thread.start()
 
     # Exécuter le bot de manière synchrone
-    await run_bot()
+    asyncio.run(run_bot())  # Utilise asyncio.run() pour exécuter la fonction asynchrone
 
