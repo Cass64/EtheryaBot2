@@ -1,0 +1,18 @@
+{
+    "channel_ids": {
+        "staff_channel": 1340674704964583455,
+        "announcement_channel": 1343698434653159424,
+        "welcome_channel": 1344065559826006047
+    },
+    "roles": {
+        "gf_required_role": "″ [𝑺ץ] Gestion & Finance Team",
+        "entrepreneur_role": 1343697977893453864,
+        "construction_role": 1343697977893453864
+    },
+    "limits": {
+        "max_investment": 100000,
+        "min_withdrawal": 1
+    },
+    "interest_rate": 0.02,
+    "cooldown_time": "24:00:00"
+}
