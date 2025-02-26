@@ -2,7 +2,7 @@ from discord.ext import commands
 import json
 import os
 
-class Frags(commands.Cog):
+class FragsCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.data_file = 'data/frags.json'
@@ -45,4 +45,4 @@ class Frags(commands.Cog):
             await ctx.send(f"{member.mention} has no frags recorded.")
 
 def setup(bot):
-    bot.add_cog(Frags(bot))
+    bot.add_cog(FragsCommands(bot))

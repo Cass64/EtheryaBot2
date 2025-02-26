@@ -3,7 +3,7 @@ from discord.ext import commands
 import json
 import os
 
-class LivretA(commands.Cog):
+class LivretACommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.data_file = 'data/livret_a.json'
@@ -85,4 +85,4 @@ class LivretA(commands.Cog):
         await ctx.send(embed=embed)
 
 def setup(bot):
-    bot.add_cog(LivretA(bot))
+    bot.add_cog(LivretACommands(bot))

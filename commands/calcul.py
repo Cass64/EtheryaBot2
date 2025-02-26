@@ -3,7 +3,7 @@ from discord.ext import commands
 import json
 import os
 
-class Calcul(commands.Cog):
+class CalculCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -18,4 +18,4 @@ class Calcul(commands.Cog):
         await ctx.send(embed=embed)
 
 def setup(bot):
-    bot.add_cog(Calcul(bot))
+    bot.add_cog(CalculCommands(bot))

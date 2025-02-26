@@ -2,6 +2,7 @@ from discord import Embed, Interaction
 from discord.ext import commands
 import json
 import os
+import random
 
 class EntrepriseCommands(commands.Cog):
     def __init__(self, bot):
