@@ -12,7 +12,7 @@ with open('data/config.json') as config_file:
     config = json.load(config_file)
 
 TOKEN = os.getenv('TOKEN_BOT_DISCORD')
-GUILD_ID = config['guild_id']
+GUILD_ID = config.get('guild_id', 0)  # 0 ou une valeur par défaut
 
 # Initialize bot
 intents = discord.Intents.default()
