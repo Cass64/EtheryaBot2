@@ -3,7 +3,7 @@ from discord.ext import commands
 import json
 import os
 
-class EmbedCommand(commands.Cog):
+class EmbedCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -15,4 +15,4 @@ class EmbedCommand(commands.Cog):
         await ctx.send(embed=embed)
 
 def setup(bot):
-    bot.add_cog(EmbedCommand(bot))
+    bot.add_cog(EmbedCommands(bot))
